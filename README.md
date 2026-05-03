@@ -1,0 +1,1 @@
+im too lazy to download emojis individually on discord, so i bulk barned it

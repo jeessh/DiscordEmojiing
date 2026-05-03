@@ -1,0 +1,622 @@
+:root {
+  color-scheme: dark;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(116, 157, 255, 0.18), transparent 22%),
+    radial-gradient(circle at top right, rgba(140, 102, 255, 0.12), transparent 26%),
+    linear-gradient(180deg, #070b14 0%, #090f1e 100%);
+  color: #edf2ff;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 1rem));
+  margin: 0 auto;
+  padding: 1rem 0 5rem;
+}
+
+.panel {
+  border: 1px solid rgba(148, 180, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(10, 15, 28, 0.76);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+}
+
+.auth-screen {
+  min-height: calc(100vh - 6rem);
+  display: grid;
+  place-items: center;
+}
+
+.auth-card {
+  width: min(560px, 100%);
+  padding: 1.4rem;
+}
+
+.app-title {
+  margin: 0 0 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(148, 180, 255, 0.12);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.field-label {
+  display: block;
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(237, 242, 255, 0.88);
+}
+
+.token-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.token-tab {
+  flex: 1;
+  padding: 0.75rem 0;
+  background: none;
+  border: none;
+  color: rgba(237, 242, 255, 0.62);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.token-tab:hover {
+  color: rgba(237, 242, 255, 0.85);
+}
+
+.token-tab.active {
+  color: #a8c4ff;
+  border-bottom-color: #6e9bff;
+}
+
+.token-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.token-type-row {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.token-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: rgba(237, 242, 255, 0.8);
+}
+
+.token-instructions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-top: 0.85rem;
+}
+
+.instruction-block {
+  padding: 0.7rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(148, 180, 255, 0.06);
+  color: rgba(237, 242, 255, 0.85);
+  font-size: 0.9rem;
+}
+
+.instruction-block ol {
+  margin: 0.45rem 0 0.35rem 1rem;
+  padding: 0;
+}
+
+.instruction-block a {
+  color: #a8c4ff;
+}
+
+.instruction-block code {
+  background: rgba(255,255,255,0.02);
+  padding: 0.12rem 0.28rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.show-token-label {
+  position: absolute;
+  right: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: rgba(237, 242, 255, 0.8);
+  cursor: pointer;
+}
+
+.show-token-label input {
+  cursor: pointer;
+}
+
+.server-id-instructions {
+  margin-top: 0.45rem;
+  font-size: 0.92rem;
+  color: rgba(237, 242, 255, 0.78);
+}
+
+.token-input,
+.search-input {
+  width: 100%;
+  border: 1px solid rgba(148, 180, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(8, 12, 24, 0.95);
+  color: #f7f9ff;
+  outline: none;
+  padding: 0.88rem 0.92rem;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.token-input-wrapper .token-input {
+  padding-right: 3.2rem;
+}
+
+.token-input:focus,
+.search-input:focus {
+  border-color: rgba(129, 171, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(90, 139, 255, 0.18);
+}
+
+.note {
+  margin: 0.55rem 0 0;
+  font-size: 0.84rem;
+  color: rgba(237, 242, 255, 0.62);
+}
+
+.inline-error,
+.section-status,
+.error-box {
+  margin: 0.75rem 0 0;
+  padding: 0.8rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 145, 145, 0.18);
+  background: rgba(255, 121, 121, 0.08);
+  color: #ffb0b0;
+}
+
+.connect-button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.primary,
+.secondary,
+.export-fab {
+  border: 0;
+  border-radius: 12px;
+  padding: 0.82rem 1rem;
+  font-weight: 600;
+  transition:
+    transform 150ms ease,
+    opacity 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
+}
+
+.primary {
+  background: linear-gradient(135deg, #6e9bff 0%, #8c6cff 100%);
+  color: white;
+  box-shadow: 0 12px 24px rgba(102, 136, 255, 0.18);
+}
+
+.secondary {
+  color: #edf2ff;
+  background: rgba(148, 180, 255, 0.1);
+  border: 1px solid rgba(148, 180, 255, 0.14);
+}
+
+.primary:hover,
+.secondary:hover,
+.export-fab:hover {
+  transform: translateY(-1px);
+}
+
+.primary:disabled,
+.secondary:disabled,
+.export-fab:disabled {
+  cursor: progress;
+  opacity: 0.55;
+  transform: none;
+}
+
+.servers-screen,
+.dashboard-screen {
+  display: block;
+}
+
+.servers-card,
+.dashboard-shell {
+  padding: 1rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.compact-header {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.section-label {
+  margin: 0 0 0.25rem;
+  color: #90b4ff;
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.compact-action {
+  white-space: nowrap;
+}
+
+.guild-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.9rem;
+}
+
+.guild-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.72rem;
+  border: 1px solid rgba(148, 180, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  text-align: left;
+  transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
+}
+
+.guild-item:hover {
+  border-color: rgba(148, 180, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
+}
+
+.guild-item.selected {
+  border-color: rgba(110, 232, 158, 0.36);
+  background: rgba(110, 232, 158, 0.08);
+}
+
+.guild-icon,
+.server-icon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.guild-fallback,
+.server-fallback {
+  display: grid;
+  place-items: center;
+  color: rgba(237, 242, 255, 0.9);
+  font-weight: 700;
+}
+
+.guild-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.manual-form {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.manual-row {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.manual-button {
+  flex: 0 0 auto;
+}
+
+.dashboard-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.server-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.server-meta h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.server-meta p {
+  margin: 0.1rem 0 0;
+  color: rgba(237, 242, 255, 0.66);
+  font-size: 0.84rem;
+}
+
+.dashboard-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+.compact-search {
+  min-width: min(320px, 100%);
+}
+
+.dashboard-error {
+  margin-top: 0.9rem;
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.emoji-card {
+  position: relative;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.75rem;
+  border: 1px solid rgba(148, 180, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  text-align: center;
+  transition:
+    border-color 120ms ease,
+    background 120ms ease,
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.emoji-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(148, 180, 255, 0.22);
+}
+
+.emoji-card.selected {
+  border-color: rgba(110, 232, 158, 0.36);
+  background: rgba(110, 232, 158, 0.08);
+  box-shadow: 0 0 0 2px rgba(110, 232, 158, 0.08) inset;
+}
+
+.emoji-frame {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 24px 24px;
+}
+
+.emoji-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.emoji-check {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.45rem;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: #6ee8a0;
+  color: #0b1020;
+  font-weight: 900;
+  box-shadow: 0 6px 16px rgba(110, 232, 158, 0.25);
+}
+
+.emoji-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.84rem;
+  color: rgba(237, 242, 255, 0.88);
+}
+
+.emoji-empty,
+.compact-empty {
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  grid-column: 1 / -1;
+}
+
+.empty-state {
+  padding: 1rem;
+  border-radius: 14px;
+  border: 1px dashed rgba(148, 180, 255, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(237, 242, 255, 0.72);
+}
+
+.export-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 20;
+  min-width: 176px;
+  border: 1px solid rgba(148, 180, 255, 0.16);
+  background: linear-gradient(135deg, #6e9bff 0%, #8c6cff 100%);
+  color: white;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+}
+
+.export-toast {
+  position: fixed;
+  right: 1rem;
+  bottom: 4.8rem;
+  z-index: 20;
+  max-width: min(420px, calc(100% - 2rem));
+  padding: 0.8rem 0.95rem;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 180, 255, 0.14);
+  background: rgba(10, 15, 28, 0.9);
+  color: rgba(237, 242, 255, 0.92);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+}
+
+.export-toast.loading {
+  border-color: rgba(126, 166, 255, 0.24);
+  color: #a8c4ff;
+}
+
+.export-toast.success {
+  border-color: rgba(110, 232, 158, 0.24);
+  color: #8ef3b6;
+}
+
+.export-toast.error {
+  border-color: rgba(255, 145, 145, 0.24);
+  color: #ffb0b0;
+}
+
+@media (max-width: 900px) {
+  .dashboard-topbar,
+  .section-header,
+  .manual-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dashboard-controls {
+    justify-content: stretch;
+  }
+
+  .compact-search {
+    min-width: 0;
+  }
+
+  .guild-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .token-instructions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    width: min(100% - 0.7rem, 1180px);
+    padding-top: 0.7rem;
+  }
+
+  .auth-card,
+  .servers-card,
+  .dashboard-shell {
+    padding: 0.85rem;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    gap: 0.65rem;
+  }
+
+  .emoji-card {
+    padding: 0.6rem;
+  }
+
+  .export-fab {
+    right: 0.65rem;
+    bottom: 0.65rem;
+    min-width: 152px;
+  }
+
+  .export-toast {
+    right: 0.65rem;
+    bottom: 4.3rem;
+  }
+}
