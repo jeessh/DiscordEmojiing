@@ -1,0 +1,136 @@
+.auth-screen {
+  min-height: calc(100vh - 6rem);
+  display: grid;
+  place-items: center;
+}
+
+.auth-card {
+  width: min(560px, 100%);
+  padding: 1.4rem;
+}
+
+.app-title {
+  margin: 0 0 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(148, 180, 255, 0.12);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.token-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.token-tab {
+  flex: 1;
+  padding: 0.75rem 0;
+  background: none;
+  border: none;
+  color: rgba(237, 242, 255, 0.62);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.token-tab:hover {
+  color: rgba(237, 242, 255, 0.85);
+}
+
+.token-tab.active {
+  color: #a8c4ff;
+  border-bottom-color: #6e9bff;
+}
+
+.token-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.token-input {
+  width: 100%;
+  border: 1px solid rgba(148, 180, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(8, 12, 24, 0.95);
+  color: #f7f9ff;
+  outline: none;
+  padding: 0.88rem 0.92rem;
+  padding-right: 3.2rem;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.token-input-wrapper .token-input {
+  padding-right: 3.2rem;
+}
+
+.token-input:focus {
+  border-color: rgba(129, 171, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(90, 139, 255, 0.18);
+}
+
+.show-token-label {
+  position: absolute;
+  right: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: rgba(237, 242, 255, 0.8);
+  cursor: pointer;
+}
+
+.show-token-label input {
+  cursor: pointer;
+}
+
+.token-instructions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-top: 0.85rem;
+}
+
+.instruction-block {
+  padding: 0.7rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(148, 180, 255, 0.06);
+  color: rgba(237, 242, 255, 0.85);
+  font-size: 0.9rem;
+}
+
+.instruction-block ol {
+  margin: 0.45rem 0 0.35rem 1rem;
+  padding: 0;
+}
+
+.instruction-block a {
+  color: #a8c4ff;
+}
+
+.instruction-block code {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.12rem 0.28rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.connect-button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .token-instructions {
+    grid-template-columns: 1fr;
+  }
+}

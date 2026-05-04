@@ -1,0 +1,163 @@
+.servers-screen {
+  display: block;
+}
+
+.servers-card {
+  padding: 1rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.compact-header {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.section-label {
+  margin: 0 0 0.25rem;
+  color: #90b4ff;
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.compact-action {
+  white-space: nowrap;
+}
+
+.selection-row {
+  margin: 0.75rem 0;
+}
+
+.selection-label {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0;
+  cursor: pointer;
+}
+
+.selection-label input,
+.guild-check {
+  cursor: pointer;
+}
+
+.guild-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.9rem;
+}
+
+.guild-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.72rem;
+  border: 1px solid rgba(148, 180, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  text-align: left;
+  transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
+}
+
+.guild-item:hover {
+  border-color: rgba(148, 180, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
+}
+
+.guild-item.selected {
+  border-color: rgba(110, 232, 158, 0.36);
+  background: rgba(110, 232, 158, 0.08);
+}
+
+.guild-icon,
+.server-icon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.guild-fallback,
+.server-fallback {
+  display: grid;
+  place-items: center;
+  color: rgba(237, 242, 255, 0.9);
+  font-weight: 700;
+}
+
+.guild-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.multi-view-button {
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.manual-form {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.manual-row {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.manual-button {
+  flex: 0 0 auto;
+}
+
+.server-id-instructions {
+  margin-top: 0.45rem;
+}
+
+.compact-empty {
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 900px) {
+  .section-header,
+  .manual-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dashboard-controls {
+    justify-content: stretch;
+  }
+
+  .compact-search {
+    min-width: 0;
+  }
+
+  .guild-list {
+    grid-template-columns: 1fr;
+  }
+}

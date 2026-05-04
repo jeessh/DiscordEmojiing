@@ -1,0 +1,217 @@
+.dashboard-screen {
+  display: block;
+}
+
+.dashboard-shell {
+  padding: 1rem;
+}
+
+.dashboard-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(148, 180, 255, 0.12);
+}
+
+.server-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.server-meta h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.server-meta p {
+  margin: 0.1rem 0 0;
+  color: rgba(237, 242, 255, 0.66);
+  font-size: 0.84rem;
+}
+
+.multi-server-label {
+  margin: 0 0 0.3rem;
+  color: rgba(237, 242, 255, 0.66);
+  font-size: 0.84rem;
+}
+
+.dashboard-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+.compact-search {
+  min-width: min(320px, 100%);
+}
+
+.dashboard-error {
+  margin-top: 0.9rem;
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.emoji-card {
+  position: relative;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.75rem;
+  border: 1px solid rgba(148, 180, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  text-align: center;
+  transition:
+    border-color 120ms ease,
+    background 120ms ease,
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.emoji-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(148, 180, 255, 0.22);
+}
+
+.emoji-card.selected {
+  border-color: rgba(110, 232, 158, 0.36);
+  background: rgba(110, 232, 158, 0.08);
+  box-shadow: 0 0 0 2px rgba(110, 232, 158, 0.08) inset;
+}
+
+.emoji-frame {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 24px 24px;
+}
+
+.emoji-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.emoji-check {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.45rem;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: #6ee8a0;
+  color: #0b1020;
+  font-weight: 900;
+  box-shadow: 0 6px 16px rgba(110, 232, 158, 0.25);
+}
+
+.emoji-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.84rem;
+  color: rgba(237, 242, 255, 0.88);
+}
+
+.emoji-empty {
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  grid-column: 1 / -1;
+}
+
+.export-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 20;
+  min-width: 176px;
+  border: 1px solid rgba(148, 180, 255, 0.16);
+  background: linear-gradient(135deg, #6e9bff 0%, #8c6cff 100%);
+  color: white;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+}
+
+.export-toast {
+  position: fixed;
+  right: 1rem;
+  bottom: 4.8rem;
+  z-index: 20;
+  max-width: min(420px, calc(100% - 2rem));
+  padding: 0.8rem 0.95rem;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 180, 255, 0.14);
+  background: rgba(10, 15, 28, 0.9);
+  color: rgba(237, 242, 255, 0.92);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+}
+
+.export-toast.loading {
+  border-color: rgba(126, 166, 255, 0.24);
+  color: #a8c4ff;
+}
+
+.export-toast.success {
+  border-color: rgba(110, 232, 158, 0.24);
+  color: #8ef3b6;
+}
+
+.export-toast.error {
+  border-color: rgba(255, 145, 145, 0.24);
+  color: #ffb0b0;
+}
+
+@media (max-width: 900px) {
+  .dashboard-topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dashboard-controls {
+    justify-content: stretch;
+  }
+
+  .compact-search {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .emoji-grid {
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    gap: 0.65rem;
+  }
+
+  .emoji-card {
+    padding: 0.6rem;
+  }
+
+  .export-fab {
+    right: 0.65rem;
+    bottom: 0.65rem;
+    min-width: 152px;
+  }
+
+  .export-toast {
+    right: 0.65rem;
+    bottom: 4.3rem;
+  }
+}
