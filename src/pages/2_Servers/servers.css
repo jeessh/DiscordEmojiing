@@ -3,7 +3,7 @@
 }
 
 .servers-card {
-  padding: 1rem;
+  padding: 1rem 1.6rem;
 }
 
 .section-header {
@@ -12,6 +12,29 @@
   align-items: flex-start;
   gap: 1rem;
   margin-bottom: 0.9rem;
+}
+
+.back-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  color: rgba(160, 190, 255, 0.95);
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.back-link .chev {
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .compact-header {
@@ -36,36 +59,57 @@
   white-space: nowrap;
 }
 
-.selection-row {
-  margin: 0.75rem 0;
-}
-
-.selection-label {
-  display: inline-flex;
-  gap: 0.5rem;
+.search-row {
+  display: flex;
+  gap: 0.6rem;
   align-items: center;
-  margin: 0;
+  margin: 0.55rem 0 0.9rem 0;
+}
+
+.search-row .compact-search {
+  flex: 1 1 auto;
+}
+
+.search-input.compact-search {
+  padding-right: 3.2rem;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(148, 180, 255, 0.06);
+  color: rgba(200,220,255,0.9);
   cursor: pointer;
 }
 
-.selection-label input,
-.guild-check {
-  cursor: pointer;
+.icon-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.multi-toggle.active {
+  border-color: rgba(110, 232, 158, 0.5);
+  background: rgba(110, 232, 158, 0.08);
+  color: rgba(110, 232, 158, 0.95);
 }
 
 .guild-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0.7rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
   margin-top: 0.9rem;
 }
 
 .guild-item {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.9rem;
   width: 100%;
-  padding: 0.72rem;
+  padding: 0.9rem;
   border: 1px solid rgba(148, 180, 255, 0.12);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.03);
@@ -87,8 +131,8 @@
 
 .guild-icon,
 .server-icon {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   flex: 0 0 auto;
   border-radius: 12px;
   object-fit: cover;
@@ -116,23 +160,33 @@
   margin-top: 0.75rem;
 }
 
-.manual-form {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(148, 180, 255, 0.12);
+.fetch-emojis {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6e9bff 0%, #8c6cff 100%);
+  border: none;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 12px 24px rgba(102, 136, 255, 0.18);
+  cursor: pointer;
+  z-index: 1200;
+  transition: transform 150ms ease, opacity 150ms ease, box-shadow 150ms ease;
 }
 
-.manual-row {
-  display: flex;
-  gap: 0.7rem;
+.fetch-emojis:hover {
+  transform: translateY(-2px);
 }
 
-.manual-button {
-  flex: 0 0 auto;
-}
-
-.server-id-instructions {
-  margin-top: 0.45rem;
+.fetch-emojis.disabled {
+  background: rgba(200,200,200,0.06);
+  border-color: rgba(200,200,200,0.08);
+  color: rgba(200,200,200,0.7);
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.6;
 }
 
 .compact-empty {
@@ -140,6 +194,58 @@
   display: grid;
   place-items: center;
   grid-column: 1 / -1;
+}
+
+.loading-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.servers-loading {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 0.9rem;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(148, 180, 255, 0.08);
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  animation: skeleton-shimmer 1.35s infinite;
+}
+
+.skeleton-card {
+  pointer-events: none;
+  min-height: 76px;
+}
+
+.skeleton-circle {
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+}
+
+.skeleton-line {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.skeleton-name {
+  width: 56%;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 @media (max-width: 900px) {
@@ -158,6 +264,10 @@
   }
 
   .guild-list {
+    grid-template-columns: 1fr;
+  }
+
+  .servers-loading {
     grid-template-columns: 1fr;
   }
 }

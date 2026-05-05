@@ -26,6 +26,11 @@ export type SelectedServer = {
   icon: string | null;
 };
 
+export type ServerEmojiSection = {
+  server: SelectedServer;
+  emojis: EmojiItem[];
+};
+
 export type AppMessage = {
   tone: StatusTone;
   message: string;
@@ -76,18 +81,38 @@ export const emojiDownloadUrl = (emoji: EmojiItem) => {
 };
 
 export async function fetchDiscordJson<T>(path: string, authHeader: string): Promise<T> {
-  const response = await fetch(`${API_BASE}${path}`, {
-    headers: {
-      Authorization: authHeader,
-    },
-  });
+  const maxAttempts = 3;
 
-  if (!response.ok) {
-    const responseText = await response.text().catch(() => '');
-    throw new Error(responseText || `Discord API error ${response.status}`);
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const response = await fetch(`${API_BASE}${path}`, {
+      headers: {
+        Authorization: authHeader,
+      },
+    });
+
+    if (response.status === 429) {
+      // Rate limited. Attempt to respect Retry-After header when present.
+      const retryAfter = response.headers.get('retry-after');
+      const waitMs = retryAfter ? Number(retryAfter) * 1000 : Math.min(1000 * attempt, 5000);
+
+      if (attempt === maxAttempts) {
+        const responseText = await response.text().catch(() => '');
+        throw new Error(responseText || 'Rate limited by Discord API (429).');
+      }
+
+      await new Promise((res) => setTimeout(res, waitMs));
+      continue;
+    }
+
+    if (!response.ok) {
+      const responseText = await response.text().catch(() => '');
+      throw new Error(responseText || `Discord API error ${response.status}`);
+    }
+
+    return response.json() as Promise<T>;
   }
 
-  return response.json() as Promise<T>;
+  throw new Error('Failed to fetch from Discord API after retries.');
 }
 
 export const formatError = (error: unknown, fallback = 'Something went wrong.') => {

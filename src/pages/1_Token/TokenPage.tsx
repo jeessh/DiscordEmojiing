@@ -21,16 +21,12 @@ function TokenPage() {
       <form className="auth-card panel" onSubmit={handleConnect}>
         <h1 className="app-title">Discord Emoji Exporter</h1>
 
-        <label className="field-label" htmlFor="token-input">
-          Discord token
-        </label>
-
         <div className="token-tabs">
           <button type="button" className={`token-tab ${tokenType === 'user' ? 'active' : ''}`} onClick={() => setTokenType('user')}>
-            User
+            User token
           </button>
           <button type="button" className={`token-tab ${tokenType === 'bot' ? 'active' : ''}`} onClick={() => setTokenType('bot')}>
-            Bot
+            Bot token
           </button>
         </div>
 
@@ -42,15 +38,18 @@ function TokenPage() {
             value={tokenInput}
             onChange={(event) => {
               setTokenInput(event.target.value);
-              clearTokenError();
+              clearTokenError?.();
             }}
             placeholder="Paste a Discord token"
             autoComplete="off"
             spellCheck={false}
           />
-          <label className="show-token-label">
-            <input type="checkbox" checked={showToken} onChange={() => setShowToken((current) => !current)} />
-            Show
+        </div>
+
+        <div className="show-token-row">
+          <label>
+            <input type="checkbox" checked={showToken} onChange={() => setShowToken((current) => !current)} style={{ marginRight: '0.5rem' }} />
+            Show Token
           </label>
         </div>
 
@@ -61,34 +60,29 @@ function TokenPage() {
         ) : null}
 
         <div className="token-instructions">
-          <div className="instruction-block">
-            <strong>User token (desktop Discord)</strong>
-            <ol>
-              <li>Open Discord in a desktop browser.</li>
-              <li>Open Developer Tools (Cmd+Option+I / Ctrl+Shift+I).</li>
-              <li>
-                Go to Application → Local Storage → https://discord.com and find the <code>token</code> key.
-              </li>
-              <li>Copy the value and paste here.</li>
-            </ol>
-            <p className="note">
-              You can also run <code>copy(localStorage.getItem('token'))</code> in Console.
-            </p>
-          </div>
+          {tokenType === 'user' ? (
+            <div className="instruction-block">
+              <ol style={{ margin: 0 }}>
+                <li>Open Discord in a desktop browser.</li>
+                <li>Open Dev Tools/Inspect Element (Cmd+Option+I / Ctrl+Shift+I / F12).</li>
+                <li>Application → Local Storage → https://discord.com and find the <code>token</code> key.</li>
+                <li>Copy the value and paste. Quotations will be auto removed for convenience :3</li>
+              </ol>
+              <p className="note" style={{ marginTop: '0.6rem' }}>
+                You can also run <code>copy(localStorage.getItem('token'))</code> in Console.
+              </p>
+            </div>
+          ) : null}
+
           {tokenType === 'bot' ? (
             <div className="instruction-block">
-              <strong>Bot token (Developer Portal)</strong>
-              <ol>
+              <ol style={{ margin: 0 }}>
                 <li>
-                  Open{' '}
-                  <a href="https://discord.com/developers/applications" target="_blank" rel="noreferrer">
-                    Discord Developer Portal
-                  </a>
-                  .
+                  Open <a href="https://discord.com/developers/applications" target="_blank" rel="noreferrer">Discord Developer Portal</a>.
                 </li>
                 <li>Select your application, open the Bot section, and create a bot if needed.</li>
                 <li>Click Reset Token or Copy to reveal and copy the bot token.</li>
-                <li>Paste the token here. The app will prefix Bot automatically if needed.</li>
+                <li>Paste the token here. The app will prefix <em>Bot </em> automatically if needed.</li>
               </ol>
             </div>
           ) : null}
@@ -109,3 +103,4 @@ function TokenPage() {
 }
 
 export default TokenPage;
+

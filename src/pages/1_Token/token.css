@@ -5,8 +5,8 @@
 }
 
 .auth-card {
-  width: min(560px, 100%);
-  padding: 1.4rem;
+  width: min(640px, 100%);
+  padding: 1.6rem;
 }
 
 .app-title {
@@ -77,35 +77,40 @@
   box-shadow: 0 0 0 3px rgba(90, 139, 255, 0.18);
 }
 
-.show-token-label {
-  position: absolute;
-  right: 0.7rem;
-  display: inline-flex;
+.show-token-row {
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.85rem;
-  color: rgba(237, 242, 255, 0.8);
-  cursor: pointer;
+  padding-top: 0.6rem;
 }
 
-.show-token-label input {
-  cursor: pointer;
+.show-token-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: rgba(237, 242, 255, 0.88);
 }
 
 .token-instructions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.8rem;
+  gap: 0.9rem;
   margin-top: 0.85rem;
 }
 
+/* When only one instruction block is present, span full width */
+.token-instructions > .instruction-block:only-child {
+  grid-column: 1 / -1;
+}
+
 .instruction-block {
-  padding: 0.7rem;
+  padding: 0.9rem;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(148, 180, 255, 0.06);
-  color: rgba(237, 242, 255, 0.85);
-  font-size: 0.9rem;
+  color: rgba(237, 242, 255, 0.95);
+  font-size: 0.95rem;
 }
 
 .instruction-block ol {

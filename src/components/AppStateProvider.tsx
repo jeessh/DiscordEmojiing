@@ -8,6 +8,7 @@ import {
   type EmojiItem,
   type GuildDetails,
   type GuildSummary,
+  type ServerEmojiSection,
   type SelectedServer,
   emojiDownloadUrl,
   fetchDiscordJson,
@@ -46,6 +47,7 @@ type AppState = {
   dashboardLoading: boolean;
   dashboardError: string | null;
   emojis: EmojiItem[];
+  serverEmojiSections: ServerEmojiSection[];
   emojiSearch: string;
   setEmojiSearch: (value: string) => void;
   selectedEmojiIds: Set<string>;
@@ -114,6 +116,7 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
   const [dashboardLoading, setDashboardLoading] = useState(false);
   const [dashboardError, setDashboardError] = useState<string | null>(null);
   const [emojis, setEmojis] = useState<EmojiItem[]>([]);
+  const [serverEmojiSections, setServerEmojiSections] = useState<ServerEmojiSection[]>([]);
   const [emojiSearch, setEmojiSearch] = useState('');
   const [selectedEmojiIds, setSelectedEmojiIds] = useState<Set<string>>(new Set());
 
@@ -239,6 +242,7 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
         setManualServerId('');
         setSelectedServer(null);
         setEmojis([]);
+        setServerEmojiSections([]);
         setSelectedEmojiIds(new Set());
         setEmojiSearch('');
         setDashboardError(null);
@@ -268,6 +272,7 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
       goToDashboard();
       setSelectedServer(server);
       setEmojis([]);
+      setServerEmojiSections([]);
       setSelectedEmojiIds(new Set());
       setEmojiSearch('');
       setDashboardLoading(true);
@@ -317,6 +322,7 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
     setDashboardError(null);
     setExportMessage(DEFAULT_MESSAGE);
     setEmojis([]);
+    setServerEmojiSections([]);
     setSelectedEmojiIds(new Set());
     setEmojiSearch('');
     setSelectedServer(null);
@@ -324,19 +330,23 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
     try {
       const allEmojis: EmojiItem[] = [];
       const errors: string[] = [];
+      const sections: ServerEmojiSection[] = [];
 
       for (const server of selectedServers) {
         try {
           const emojiResult = await fetchDiscordJson<EmojiItem[]>(`/guilds/${server.id}/emojis`, authSession.header);
           allEmojis.push(...emojiResult);
+          sections.push({ server, emojis: emojiResult });
         } catch {
           errors.push(`Failed to load emojis from ${server.name}`);
+          sections.push({ server, emojis: [] });
         }
       }
 
       if (requestId !== dashboardRequestIdRef.current) return;
 
       setEmojis(allEmojis);
+      setServerEmojiSections(sections.length > 0 ? sections : selectedServers.map((server) => ({ server, emojis: [] })));
       if (errors.length > 0) {
         setDashboardError(errors.join('; '));
       }
@@ -419,7 +429,10 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
   }, [filteredEmojis]);
 
   const handleExport = useCallback(async () => {
-    if (!selectedServer || selectedEmojiList.length === 0) return;
+    const hasSelectedEmojis = selectedEmojiList.length > 0;
+    const exportLabel = selectedServer ? selectedServer.name : selectedServers[0]?.name;
+
+    if (!hasSelectedEmojis || (!selectedServer && selectedServers.length === 0)) return;
 
     setExporting(true);
     setExportMessage({ tone: 'loading', message: 'Exporting selected emojis…' });
@@ -427,7 +440,7 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
     try {
       const zip = new JSZip();
       const failedNames: string[] = [];
-      const serverFolderName = sanitizeFileName(selectedServer.name);
+      const serverFolderName = sanitizeFileName(exportLabel ?? 'emojis');
 
       for (const emoji of selectedEmojiList) {
         const fileName = `${sanitizeFileName(emoji.name)}.${emoji.animated ? 'gif' : 'png'}`;
@@ -470,7 +483,7 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
     } finally {
       setExporting(false);
     }
-  }, [selectedEmojiList, selectedServer]);
+  }, [selectedEmojiList, selectedServer, selectedServers]);
 
   const handleRetryDashboard = useCallback(() => {
     if (!lastServerRequestRef.current) return;
@@ -515,6 +528,7 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
       dashboardLoading,
       dashboardError,
       emojis,
+      serverEmojiSections,
       emojiSearch,
       setEmojiSearch,
       selectedEmojiIds,
@@ -549,6 +563,7 @@ export function AppStateProvider({ children, navigate }: AppStateProviderProps) 
       dashboardLoading,
       emojiSearch,
       emojis,
+      serverEmojiSections,
       exportMessage,
       exporting,
       filteredEmojis,

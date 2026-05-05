@@ -3,7 +3,28 @@
 }
 
 .dashboard-shell {
-  padding: 1rem;
+  padding: 1.6rem;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  color: rgba(160, 190, 255, 0.95);
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.back-link .chev {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.dashboard-back {
+  margin: 0 0 0.75rem;
 }
 
 .dashboard-topbar {
@@ -40,19 +61,131 @@
 }
 
 .dashboard-controls {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: flex-end;
   gap: 0.55rem;
+  min-width: min(420px, 100%);
 }
 
 .compact-search {
-  min-width: min(320px, 100%);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.dashboard-controls .search-input.compact-search {
+  padding-right: 3.1rem;
+}
+
+.dashboard-controls .search-input {
+  min-width: 0;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0.55rem;
+  border-radius: 12px;
+  background: rgba(148, 180, 255, 0.08);
+  border: 1px solid rgba(148, 180, 255, 0.12);
+  color: rgba(237, 242, 255, 0.88);
+}
+
+.icon-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-button.active {
+  background: rgba(110, 232, 158, 0.1);
+  border-color: rgba(110, 232, 158, 0.45);
+  color: #8ef3b6;
+}
+
+.select-all-toggle:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .dashboard-error {
   margin-top: 0.9rem;
+}
+
+.loading-emoji-sections {
+  margin-top: 1rem;
+}
+
+.loading-summary {
+  pointer-events: none;
+}
+
+.loading-summary-text {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.loading-chevron {
+  color: transparent;
+}
+
+.loading-emoji-grid {
+  margin-top: 0;
+}
+
+.emoji-sections {
+  display: grid;
+  gap: 0.95rem;
+  margin-top: 1rem;
+}
+
+.emoji-section {
+  border: 1px solid rgba(148, 180, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+
+.emoji-section[open] {
+  border-color: rgba(148, 180, 255, 0.22);
+}
+
+.emoji-section-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 1rem;
+  cursor: pointer;
+}
+
+.emoji-section-summary::-webkit-details-marker {
+  display: none;
+}
+
+.section-meta h2 {
+  font-size: 0.98rem;
+}
+
+.section-meta p {
+  margin-top: 0.15rem;
+}
+
+.section-chevron {
+  color: rgba(237, 242, 255, 0.7);
+  font-size: 1.1rem;
+  transition: transform 150ms ease;
+}
+
+.emoji-section[open] .section-chevron {
+  transform: rotate(180deg);
+}
+
+.section-grid {
+  padding: 0 1rem 1rem;
 }
 
 .emoji-grid {
@@ -60,6 +193,61 @@
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 0.8rem;
   margin-top: 1rem;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(148, 180, 255, 0.08);
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  animation: skeleton-shimmer 1.35s infinite;
+}
+
+.skeleton-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+}
+
+.skeleton-frame {
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+}
+
+.skeleton-emoji-card {
+  pointer-events: none;
+}
+
+.skeleton-emoji-name {
+  height: 12px;
+  width: 70%;
+  border-radius: 999px;
+  margin: 0 auto;
+}
+
+.skeleton-title {
+  width: 120px;
+  height: 14px;
+  border-radius: 999px;
+}
+
+.skeleton-subtitle {
+  width: 72px;
+  height: 12px;
+  border-radius: 999px;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .emoji-card {
@@ -144,10 +332,7 @@
   bottom: 1rem;
   z-index: 20;
   min-width: 176px;
-  border: 1px solid rgba(148, 180, 255, 0.16);
-  background: linear-gradient(135deg, #6e9bff 0%, #8c6cff 100%);
-  color: white;
-  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+  border: none;
 }
 
 .export-toast {
@@ -186,11 +371,15 @@
   }
 
   .dashboard-controls {
-    justify-content: stretch;
+    min-width: 0;
   }
 
   .compact-search {
     min-width: 0;
+  }
+
+  .emoji-section-summary {
+    align-items: flex-start;
   }
 }
 
@@ -202,6 +391,10 @@
 
   .emoji-card {
     padding: 0.6rem;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   }
 
   .export-fab {
