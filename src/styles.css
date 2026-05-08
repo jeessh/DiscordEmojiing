@@ -46,6 +46,30 @@ img {
   padding: 1rem 0 5rem;
 }
 
+.app-mode-switch-container {
+  display: flex;
+  border: 1px solid rgba(148, 180, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0 0 1.2rem;
+}
+
+.app-mode-tab {
+  flex: 1;
+  border: 0;
+  background: rgba(148, 180, 255, 0.06);
+  color: rgba(237, 242, 255, 0.72);
+  font-weight: 600;
+  padding: 0.7rem 1.1rem;
+  transition: background 150ms ease, color 150ms ease;
+  cursor: pointer;
+}
+
+.app-mode-tab.active {
+  background: rgba(148, 180, 255, 0.18);
+  color: #edf2ff;
+}
+
 .panel {
   border: 1px solid rgba(148, 180, 255, 0.12);
   border-radius: 18px;

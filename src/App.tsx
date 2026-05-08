@@ -3,6 +3,7 @@ import { AppStateProvider, useAppState } from './components/AppStateProvider';
 import TokenPage from './pages/1_Token/TokenPage';
 import ServersPage from './pages/2_Servers/ServersPage';
 import EmojisPage from './pages/3_Emojis/EmojisPage';
+import SlackPage from './pages/slack/SlackPage';
 
 const VALID_PATHS = new Set(['/token', '/servers', '/dashboard']);
 
@@ -39,6 +40,7 @@ function AppRoutes({ pathname }: { pathname: string }) {
 }
 
 function App() {
+  const [activeTab, setActiveTab] = useState<'discord' | 'slack'>('discord');
   const [pathname, setPathname] = useState(() => normalizePath(window.location.pathname));
 
   useEffect(() => {
@@ -72,11 +74,38 @@ function App() {
   const key = useMemo(() => pathname, [pathname]);
 
   return (
-    <AppStateProvider navigate={navigate}>
-      <main className="app-shell" key={key}>
-        <AppRoutes pathname={pathname} />
-      </main>
-    </AppStateProvider>
+    <main className="app-shell">
+      <div className="app-mode-switch-container" role="tablist" aria-label="Transfer mode">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeTab === 'discord'}
+          className={`app-mode-tab ${activeTab === 'discord' ? 'active' : ''}`}
+          onClick={() => setActiveTab('discord')}
+        >
+          Discord
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeTab === 'slack'}
+          className={`app-mode-tab ${activeTab === 'slack' ? 'active' : ''}`}
+          onClick={() => setActiveTab('slack')}
+        >
+          Slack
+        </button>
+      </div>
+
+      {activeTab === 'discord' ? (
+        <AppStateProvider navigate={navigate}>
+          <div key={key}>
+            <AppRoutes pathname={pathname} />
+          </div>
+        </AppStateProvider>
+      ) : (
+        <SlackPage />
+      )}
+    </main>
   );
 }
 
